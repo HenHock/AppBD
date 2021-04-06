@@ -23,6 +23,32 @@ namespace AppBD
         public MainWindow()
         {
             InitializeComponent();
+
+            tableListBox.ItemsSource = DataManager.nameTables;
+        }
+
+        private void tableButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (tableListBox.Visibility == Visibility.Collapsed)
+                tableListBox.Visibility = Visibility.Visible;
+            else tableListBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void tableListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tableListBox.SelectedIndex != -1)
+            {
+                infoScrollViewer.Visibility = Visibility.Visible;
+                DataGrid tableDataGrid = new DataGrid();
+                tableDataGrid.Margin = new Thickness(10);
+                tableDataGrid.AutoGenerateColumns = true;
+
+                DatabaseConnector.getInfoFromTable(tableListBox.SelectedItem.ToString());
+                tableDataGrid.ItemsSource = DataManager.currentTable.DefaultView;
+                if (infoStackPanel.Children.Count > 0)
+                    infoStackPanel.Children.Clear();
+                infoStackPanel.Children.Add(tableDataGrid);
+            }
         }
     }
 }

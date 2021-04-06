@@ -6,7 +6,86 @@
         xmlns:local="clr-namespace:AppBD"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="mainStyle">
+            <Setter Property="ItemsControl.Background" Value="#06111C"/>
+            <Setter Property="ItemsControl.Foreground" Value="#BEC7C7"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource mainStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="BorderBrush" Value="#BB2020"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter" 
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      Margin="{TemplateBinding Padding}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                    <!--<Setter Property="Foreground" Value="Black"/>-->
+                    <!--<Setter Property="BorderBrush" Value="#FFEB4D"/>-->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource mainStyle}">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3" />
+                </Style>
+            </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="LightBlue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="База данных">
+                <Grid Style="{StaticResource mainStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="135*"/>
+                        <ColumnDefinition Width="469*"/>
+                        <ColumnDefinition Width="100*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="detailsStackPanel" HorizontalAlignment="Left">
+                        <Button x:Name="tableButton" Content="Таблицы" Click="tableButton_Click"/>
+                        <ListBox Name="tableListBox" SelectionChanged="tableListBox_SelectionChanged" Margin="30 0 5 0" Visibility="Collapsed" Style="{StaticResource mainStyle}"/>
+                    </StackPanel>
+                    <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" Visibility="Collapsed">
+                        <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Grid.Column="1">
+
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
