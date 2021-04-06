@@ -27,7 +27,7 @@ namespace AppBD
         public MainWindow()
         {
             InitializeComponent();
-
+            MessageBox.Show("s");
             tableListBox.ItemsSource = DataManager.nameTables;
         }
 
@@ -61,7 +61,7 @@ namespace AppBD
             if(tableDataGrid.SelectedIndex != -1)
             {
                 DataManager.currentTable.Rows.RemoveAt(tableDataGrid.SelectedIndex);
-                //update bd
+                DatabaseConnector.UpdateBD(tableListBox.SelectedItem.ToString());
             }
             else
                 MessageBox.Show("Выделите строку, которую хотите удалить",

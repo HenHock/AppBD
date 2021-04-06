@@ -11,11 +11,11 @@ namespace AppBD
 {
     public class DatabaseConnector
     {
-        private static string ConnectionString = "Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
+        private static string сonnectionString = "Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
 
         public static List<string> GetTables()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(сonnectionString))
             {
                 connection.Open();
                 DataTable schema = connection.GetSchema("Tables");
@@ -41,7 +41,7 @@ namespace AppBD
 
         public static void getInfoFromTable(string tableName)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(сonnectionString))
             {
                 try
                 {
@@ -57,6 +57,26 @@ namespace AppBD
                 catch
                 {
                     MessageBox.Show("Error read info from table", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        public static void UpdateBD(string tableName)
+        {
+            using (SqlConnection connection = new SqlConnection(сonnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("SELECT * FROM " + tableName, connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
+                    adapter.Update(DataManager.currentTable);
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
