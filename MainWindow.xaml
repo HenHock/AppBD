@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppBD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="1100">
     <Window.Resources>
         <Style x:Key="mainStyle">
             <Setter Property="ItemsControl.Background" Value="#06111C"/>
@@ -13,7 +13,7 @@
         </Style>
         <Style TargetType="Button" BasedOn="{StaticResource mainStyle}">
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Width" Value="120"/>
+            <Setter Property="Padding" Value="5 0 5 0"/>
             <Setter Property="Height" Value="36"/>
             <Setter Property="BorderBrush" Value="#BB2020"/>
             <Setter Property="BorderThickness" Value="2"/>
@@ -48,7 +48,7 @@
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="3" />
@@ -68,11 +68,11 @@
             <TabItem Header="База данных">
                 <Grid Style="{StaticResource mainStyle}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="135*"/>
-                        <ColumnDefinition Width="469*"/>
-                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="96*"/>
+                        <ColumnDefinition Width="317*"/>
+                        <ColumnDefinition Width="89*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="detailsStackPanel" HorizontalAlignment="Left">
+                    <StackPanel x:Name="detailsStackPanel" HorizontalAlignment="Left" Width="105">
                         <Button x:Name="tableButton" Content="Таблицы" Click="tableButton_Click"/>
                         <ListBox Name="tableListBox" SelectionChanged="tableListBox_SelectionChanged" Margin="30 0 5 0" Visibility="Collapsed" Style="{StaticResource mainStyle}"/>
                     </StackPanel>
@@ -81,9 +81,15 @@
 
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
-
-                    </StackPanel>
+                    <ScrollViewer x:Name="toolsScroll" Grid.Column="2">
+                        <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
+                            <Button x:Name="addButton" Content="Добавить" Click="addButton_Click"/>
+                            <Button x:Name="editButton" Content="Редактировать" Click="editButton_Click"/>
+                            <StackPanel x:Name="editStackPanel" Visibility="Collapsed" Margin="30 0 0 0"/>
+                            <Button x:Name="deleteButton" Click="deleteButton_Click" Content="Удалить"/>
+                            <TextBox x:Name="findTextBox" TextChanged="findTextBox_TextChanged" Text="Поиск..." Opacity="0.5" Width="130" GotFocus="findTextBox_GotFocus" LostFocus="findTextBox_LostFocus"/>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>
