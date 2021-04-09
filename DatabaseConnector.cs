@@ -74,11 +74,11 @@ namespace AppBD
                     SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
                     adapter.Update(DataManager.currentTable);
                 }
-                catch
+                    catch
                 {
                     MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+        }
         }
     }
 }

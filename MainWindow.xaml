@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppBD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1100">
+        Title="MainWindow" Height="650" Width="1100">
     <Window.Resources>
         <Style x:Key="mainStyle">
             <Setter Property="ItemsControl.Background" Value="#06111C"/>
@@ -44,6 +44,9 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="{x:Type Border}" x:Key="borderStyle">
+            <Setter Property="CornerRadius" Value="3" />
+        </Style>
         <Style TargetType="TextBox" BasedOn="{StaticResource mainStyle}">
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="30"/>
@@ -76,17 +79,19 @@
                         <Button x:Name="tableButton" Content="Таблицы" Click="tableButton_Click"/>
                         <ListBox Name="tableListBox" SelectionChanged="tableListBox_SelectionChanged" Margin="30 0 5 0" Visibility="Collapsed" Style="{StaticResource mainStyle}"/>
                     </StackPanel>
-                    <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" Visibility="Collapsed">
+                    <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" >
                         <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Grid.Column="1">
-
+                            <TextBlock Name="nameTableTextBlock" FontSize="25" Height="30" Margin="10" HorizontalAlignment="Right"/>
                         </StackPanel>
                     </ScrollViewer>
                     <ScrollViewer x:Name="toolsScroll" Grid.Column="2">
                         <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
                             <Button x:Name="addButton" Content="Добавить" Click="addButton_Click"/>
+                            <StackPanel Margin="30 0 0 0" Name="addStackPanel" Visibility="Collapsed"/>
                             <Button x:Name="editButton" Content="Редактировать" Click="editButton_Click"/>
                             <StackPanel x:Name="editStackPanel" Visibility="Collapsed" Margin="30 0 0 0"/>
                             <Button x:Name="deleteButton" Click="deleteButton_Click" Content="Удалить"/>
+                            <Button x:Name="saveButton" Content="Сохранить" Click="saveButton_Click"/>
                             <TextBox x:Name="findTextBox" TextChanged="findTextBox_TextChanged" Text="Поиск..." Opacity="0.5" Width="130" GotFocus="findTextBox_GotFocus" LostFocus="findTextBox_LostFocus"/>
                         </StackPanel>
                     </ScrollViewer>
