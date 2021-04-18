@@ -27,7 +27,7 @@ namespace AppBD
         public MainWindow()
         {
             InitializeComponent();
-            MessageBox.Show("s");
+            
             tableListBox.ItemsSource = DataManager.nameTables;
         }
 
