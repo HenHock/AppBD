@@ -44,9 +44,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="{x:Type Border}" x:Key="borderStyle">
-            <Setter Property="CornerRadius" Value="3" />
-        </Style>
         <Style TargetType="TextBox" BasedOn="{StaticResource mainStyle}">
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="30"/>
@@ -80,8 +77,21 @@
                         <ListBox Name="tableListBox" SelectionChanged="tableListBox_SelectionChanged" Margin="30 0 5 0" Visibility="Collapsed" Style="{StaticResource mainStyle}"/>
                     </StackPanel>
                     <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" >
-                        <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Grid.Column="1">
+                        <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Column="1">
                             <TextBlock Name="nameTableTextBlock" FontSize="25" Height="30" Margin="10" HorizontalAlignment="Right"/>
+                            <Border BorderThickness="0" Margin="10" CornerRadius="15">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Color="#BB2020" ShadowDepth="0" Opacity="1"/>
+                                </Border.BitmapEffect>
+                                <Grid>
+                                    <Border x:Name="BDRounded" BorderThickness="0" CornerRadius="15" Background="#06111C"/>
+                                    <DataGrid x:Name="tableDataGrid" BorderBrush="{x:Null}">
+                                        <DataGrid.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=BDRounded}"/>
+                                        </DataGrid.OpacityMask>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
                         </StackPanel>
                     </ScrollViewer>
                     <ScrollViewer x:Name="toolsScroll" Grid.Column="2">

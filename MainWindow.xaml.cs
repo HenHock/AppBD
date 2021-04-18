@@ -23,7 +23,7 @@ namespace AppBD
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataGrid tableDataGrid;
+        //private DataGrid tableDataGrid;
         private bool BDChange = false;
         public MainWindow()
         {
@@ -104,33 +104,35 @@ namespace AppBD
                 editStackPanel.Visibility = Visibility.Collapsed;
 
                 infoScrollViewer.Visibility = Visibility.Visible;
-                tableDataGrid = new DataGrid();
+                infoStackPanel.Visibility = Visibility.Visible;
+                if (tableDataGrid.Items.Count > 0)
+                    DataManager.currentTable = new DataTable();
                 tableDataGrid.SelectionChanged += tableDataGrid_SelectionChange;
                 //tableDataGrid.IsReadOnly = true;
                 tableDataGrid.Margin = new Thickness(10);
                 tableDataGrid.AutoGenerateColumns = true;
 
-                Style headerStyle = new Style();
-                headerStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = Brushes.AliceBlue });
-                headerStyle.Setters.Add(new Setter { Property = Control.ForegroundProperty, Value = Brushes.DarkGoldenrod });
+                //Style headerStyle = new Style();
+                //headerStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = Brushes.AliceBlue });
+                //headerStyle.Setters.Add(new Setter { Property = Control.ForegroundProperty, Value = Brushes.DarkGoldenrod });
 
-                Style dataGridStyle = new Style();
+                //Style dataGridStyle = new Style();
                 //dataGridStyle.Resources = Resources["borderStyle"];
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderBrushProperty, Value = Brushes.DarkRed });
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderThicknessProperty, Value = new Thickness(2) });
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.AlternatingRowBackgroundProperty, Value = Brushes.Black });
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ForegroundProperty, Value = Brushes.Gray });
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ColumnHeaderStyleProperty, Value = headerStyle });
-                dataGridStyle.Setters.Add(new Setter { Property = DataGrid.RowHeaderStyleProperty, Value = headerStyle });
-                tableDataGrid.Style = dataGridStyle;
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderBrushProperty, Value = Brushes.DarkRed });
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderThicknessProperty, Value = new Thickness(2) });
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.AlternatingRowBackgroundProperty, Value = Brushes.Black });
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ForegroundProperty, Value = Brushes.Gray });
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ColumnHeaderStyleProperty, Value = headerStyle });
+                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.RowHeaderStyleProperty, Value = headerStyle });
+                //tableDataGrid.Style = dataGridStyle;
 
                 nameTableTextBlock.Text = tableListBox.SelectedItem.ToString();
                 DatabaseConnector.getInfoFromTable(nameTableTextBlock.Text);
                 tableDataGrid.ItemsSource = DataManager.currentTable.DefaultView;
-                if (infoStackPanel.Children.Count > 0)
-                    infoStackPanel.Children.Clear();
-                infoStackPanel.Children.Add(nameTableTextBlock);
-                infoStackPanel.Children.Add(tableDataGrid);
+                //if (infoStackPanel.Children.Count > 0)
+                //    infoStackPanel.Children.Clear();
+                //infoStackPanel.Children.Add(nameTableTextBlock);
+                //infoStackPanel.Children.Add(tableDataGrid);
             }
         }
 
