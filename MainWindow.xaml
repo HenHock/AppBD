@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppBD"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1100">
+        Title="MainWindow" Height="650" Width="1100">
     <Window.Resources>
         <Style x:Key="mainStyle">
             <Setter Property="ItemsControl.Background" Value="#06111C"/>
             <Setter Property="ItemsControl.Foreground" Value="#BEC7C7"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="20"/>
         </Style>
         <Style TargetType="Button" BasedOn="{StaticResource mainStyle}">
             <Setter Property="FontSize" Value="20"/>
@@ -64,7 +68,11 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="405*"/>
+            <RowDefinition Height="215*"/>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="tabControl" TabStripPlacement="Left" Grid.RowSpan="2">
             <TabItem Header="База данных">
                 <Grid Style="{StaticResource mainStyle}">
                     <Grid.ColumnDefinitions>
@@ -76,20 +84,53 @@
                         <Button x:Name="tableButton" Content="Таблицы" Click="tableButton_Click"/>
                         <ListBox Name="tableListBox" SelectionChanged="tableListBox_SelectionChanged" Margin="30 0 5 0" Visibility="Collapsed" Style="{StaticResource mainStyle}"/>
                     </StackPanel>
-                    <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" Visibility="Collapsed">
-                        <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Grid.Column="1">
-
+                    <ScrollViewer Grid.Column="1" x:Name="infoScrollViewer" >
+                        <StackPanel x:Name="infoStackPanel" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Column="1">
+                            <TextBlock Name="nameTableTextBlock" FontSize="25" Height="30" Margin="10" HorizontalAlignment="Right"/>
+                            <Border BorderThickness="0" Margin="10" CornerRadius="15">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Color="#BB2020" ShadowDepth="0" Opacity="1"/>
+                                </Border.BitmapEffect>
+                                <Grid>
+                                    <Border x:Name="BDRounded" BorderThickness="0" CornerRadius="15" Background="#06111C"/>
+                                    <DataGrid x:Name="tableDataGrid" BorderBrush="{x:Null}">
+                                        <DataGrid.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=BDRounded}"/>
+                                        </DataGrid.OpacityMask>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
                         </StackPanel>
                     </ScrollViewer>
                     <ScrollViewer x:Name="toolsScroll" Grid.Column="2">
                         <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
                             <Button x:Name="addButton" Content="Добавить" Click="addButton_Click"/>
+                            <StackPanel Margin="30 0 0 0" Name="addStackPanel" Visibility="Collapsed"/>
                             <Button x:Name="editButton" Content="Редактировать" Click="editButton_Click"/>
                             <StackPanel x:Name="editStackPanel" Visibility="Collapsed" Margin="30 0 0 0"/>
                             <Button x:Name="deleteButton" Click="deleteButton_Click" Content="Удалить"/>
+                            <Button x:Name="saveButton" Content="Сохранить" Click="saveButton_Click"/>
                             <TextBox x:Name="findTextBox" TextChanged="findTextBox_TextChanged" Text="Поиск..." Opacity="0.5" Width="130" GotFocus="findTextBox_GotFocus" LostFocus="findTextBox_LostFocus"/>
                         </StackPanel>
                     </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Отчёты" Height="24" VerticalAlignment="Top">
+                <Grid Style="{StaticResource mainStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="438*"/>
+                        <RowDefinition Height="175*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45*"/>
+                        <ColumnDefinition Width="220*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="toolsReportStackPanel" Grid.RowSpan="2">
+                        <TextBlock Text="Список отчётов:"/>
+                        <ListBox x:Name="reportListBox" Style="{StaticResource mainStyle}" SelectionChanged="reportListBox_SelectionChanged"/>
+                    </StackPanel>
+                    <StackPanel x:Name="mainReportStackPanel" Grid.Column="1" Grid.RowSpan="2"/>
+                    <Canvas x:Name="reportGrafic" Grid.Column="1" Grid.Row="1"/>
                 </Grid>
             </TabItem>
         </TabControl>

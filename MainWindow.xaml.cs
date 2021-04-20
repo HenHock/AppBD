@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts.Wpf;
+using LiveCharts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -32,6 +34,9 @@ namespace AppBD
             tableListBox.ItemsSource = DataManager.nameTables;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closed += MainWindow_Closed;
+            reportListBox.Items.Add("Classes");
+            reportListBox.Items.Add("Battles");
+            reportListBox.Items.Add("Ships");
         }
 
         private void SaveBD()
@@ -91,7 +96,7 @@ namespace AppBD
                             e.Handled = true;
                             return;
                         }
-                        else
+                        else if(result == MessageBoxResult.Yes)
                         {
                             BDChange = false;
                         }
@@ -376,7 +381,7 @@ namespace AppBD
         {
             if(tableDataGrid.SelectedIndex == -1)
             {
-                BDChange = true;
+                //BDChange = true;
             }
 
             if (editStackPanel.Visibility == Visibility.Visible)
@@ -433,6 +438,77 @@ namespace AppBD
             {
                 DatabaseConnector.UpdateBD(nameTableTextBlock.Text);
                 BDChange = false;
+            }
+        }
+
+        private void reportListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(reportListBox.SelectedIndex != -1)
+            {
+                if (reportGrafic.Children.Count > 0)
+                    reportGrafic.Children.Clear();
+
+                if (mainReportStackPanel.Children.Count > 0)
+                    mainReportStackPanel.Children.Clear();
+
+                if (reportListBox.SelectedIndex == 0)
+                {
+                    DataGrid dataGrid = new DataGrid();
+                    DataTable dataTable = new DataTable();
+                    DatabaseConnector.getInfoFromTable("sumShipClasses", dataTable);
+                    dataGrid.ItemsSource = dataTable.DefaultView;
+
+                    mainReportStackPanel.Children.Add(dataGrid);
+                }
+                else if(reportListBox.SelectedIndex == 2)
+                {
+                    DataGrid dataGrid = new DataGrid();
+                    DataTable dataTable = new DataTable();
+                    DatabaseConnector.getInfoFromTable("coutShipsLaunched", dataTable);
+                    dataGrid.ItemsSource = dataTable.DefaultView;
+
+                    mainReportStackPanel.Children.Add(dataGrid);
+                }
+                else if (reportListBox.SelectedIndex == 1)
+                {
+                    DataGrid dataGrid = new DataGrid();
+                    DataTable dataTable = new DataTable();
+                    DatabaseConnector.getInfoFromTable("countShipsLaunched", dataTable);
+                    dataGrid.ItemsSource = dataTable.DefaultView;
+
+                    mainReportStackPanel.Children.Add(dataGrid);
+
+                    CartesianChart Grafic = new CartesianChart();
+
+                    SeriesCollection serias = new SeriesCollection();
+                    ChartValues<int> countShips = new ChartValues<int>();
+                    List<string> nameBattles = new List<string>();
+                    foreach (DataRow dataRow in dataTable.Rows)
+                    {
+                        countShips.Add(Convert.ToInt32(dataRow[1]));
+                        nameBattles.Add(dataRow[0].ToString());
+                    }
+
+                    Grafic.AxisX.Clear();
+                    Grafic.AxisX.Add(new Axis()
+                    {
+                        Title = "Название битв",
+                        Labels = nameBattles
+                    });
+                    ColumnSeries columnSeries = new ColumnSeries();
+                    columnSeries.Title = "Кол-во потопленных кораблей ";
+                    columnSeries.Values = countShips;
+
+                    serias.Add(columnSeries);
+                    Grafic.Series = serias;
+                    Grafic.Background = new SolidColorBrush(Color.FromRgb(23, 34, 59));
+                    Grafic.Margin = new Thickness(25);
+                    Grid.SetRow(Grafic, 1);
+                    Grid.SetColumn(Grafic, 1);
+                    Grafic.Height = 120;
+                    Grafic.Width = 500;
+                    reportGrafic.Children.Add(Grafic);
+                }
             }
         }
     }

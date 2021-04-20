@@ -61,6 +61,28 @@ namespace AppBD
             }
         }
 
+        public static void getInfoFromTable(string tableName, DataTable dataTable)
+        {
+            using (SqlConnection connection = new SqlConnection(сonnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    if (DataManager.currentTable != null)
+                        DataManager.currentTable = new DataTable();
+
+                    SqlCommand command = new SqlCommand("SELECT * FROM " + tableName, connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTable);
+                }
+                catch
+                {
+                    MessageBox.Show("Error read info from table", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         public static void UpdateBD(string tableName)
         {
             using (SqlConnection connection = new SqlConnection(сonnectionString))
@@ -74,11 +96,11 @@ namespace AppBD
                     SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
                     adapter.Update(DataManager.currentTable);
                 }
-                catch
+                    catch
                 {
                     MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+        }
         }
     }
 }
