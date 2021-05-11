@@ -34,9 +34,9 @@ namespace AppBD
             tableListBox.ItemsSource = DataManager.nameTables;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closed += MainWindow_Closed;
-            reportListBox.Items.Add("Classes");
-            reportListBox.Items.Add("Battles");
-            reportListBox.Items.Add("Ships");
+            //reportListBox.Items.Add("Classes");
+            //reportListBox.Items.Add("Battles");
+            //reportListBox.Items.Add("Ships");
         }
 
         private void SaveBD()
@@ -116,29 +116,20 @@ namespace AppBD
                 //tableDataGrid.IsReadOnly = true;
                 tableDataGrid.Margin = new Thickness(10);
                 tableDataGrid.AutoGenerateColumns = true;
-
-                //Style headerStyle = new Style();
-                //headerStyle.Setters.Add(new Setter { Property = Control.BackgroundProperty, Value = Brushes.AliceBlue });
-                //headerStyle.Setters.Add(new Setter { Property = Control.ForegroundProperty, Value = Brushes.DarkGoldenrod });
-
-                //Style dataGridStyle = new Style();
-                //dataGridStyle.Resources = Resources["borderStyle"];
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderBrushProperty, Value = Brushes.DarkRed });
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.BorderThicknessProperty, Value = new Thickness(2) });
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.AlternatingRowBackgroundProperty, Value = Brushes.Black });
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ForegroundProperty, Value = Brushes.Gray });
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.ColumnHeaderStyleProperty, Value = headerStyle });
-                //dataGridStyle.Setters.Add(new Setter { Property = DataGrid.RowHeaderStyleProperty, Value = headerStyle });
-                //tableDataGrid.Style = dataGridStyle;
+                tableDataGrid.PreviewKeyDown += tableDataGrid_PreviewKeyDown;
 
                 nameTableTextBlock.Text = tableListBox.SelectedItem.ToString();
                 DatabaseConnector.getInfoFromTable(nameTableTextBlock.Text);
                 tableDataGrid.ItemsSource = DataManager.currentTable.DefaultView;
-                //if (infoStackPanel.Children.Count > 0)
-                //    infoStackPanel.Children.Clear();
-                //infoStackPanel.Children.Add(nameTableTextBlock);
-                //infoStackPanel.Children.Add(tableDataGrid);
+                tableDataGrid.SelectedIndex = 0;
             }
+        }
+
+        private void tableDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (tableDataGrid.SelectedIndex != -1)
+                if (e.Key == Key.Delete)
+                    BDChange = true;
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
@@ -146,6 +137,7 @@ namespace AppBD
             if(tableDataGrid.SelectedIndex != -1)
             {
                 DataManager.currentTable.Rows.RemoveAt(tableDataGrid.SelectedIndex);
+                BDChange = true;
             }
             else
                 MessageBox.Show("Выделите строку, которую хотите удалить",
@@ -379,11 +371,6 @@ namespace AppBD
 
         private void tableDataGrid_SelectionChange(object sender, EventArgs e)
         {
-            if(tableDataGrid.SelectedIndex == -1)
-            {
-                //BDChange = true;
-            }
-
             if (editStackPanel.Visibility == Visibility.Visible)
             {
                 if (editStackPanel.Children.Count > 0)
@@ -437,79 +424,81 @@ namespace AppBD
             if (tableListBox.SelectedIndex != -1)
             {
                 DatabaseConnector.UpdateBD(nameTableTextBlock.Text);
+                //DatabaseConnector.DeleteInfoDB(nameTableTextBlock.Text, 2);
                 BDChange = false;
             }
         }
+        //#region reports
+        //private void reportListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if(reportListBox.SelectedIndex != -1)
+        //    {
+        //        if (reportGrafic.Children.Count > 0)
+        //            reportGrafic.Children.Clear();
 
-        private void reportListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(reportListBox.SelectedIndex != -1)
-            {
-                if (reportGrafic.Children.Count > 0)
-                    reportGrafic.Children.Clear();
+        //        if (mainReportStackPanel.Children.Count > 0)
+        //            mainReportStackPanel.Children.Clear();
 
-                if (mainReportStackPanel.Children.Count > 0)
-                    mainReportStackPanel.Children.Clear();
+        //        if (reportListBox.SelectedIndex == 0)
+        //        {
+        //            DataGrid dataGrid = new DataGrid();
+        //            DataTable dataTable = new DataTable();
+        //            DatabaseConnector.getInfoFromTable("sumShipClasses", dataTable);
+        //            dataGrid.ItemsSource = dataTable.DefaultView;
 
-                if (reportListBox.SelectedIndex == 0)
-                {
-                    DataGrid dataGrid = new DataGrid();
-                    DataTable dataTable = new DataTable();
-                    DatabaseConnector.getInfoFromTable("sumShipClasses", dataTable);
-                    dataGrid.ItemsSource = dataTable.DefaultView;
+        //            mainReportStackPanel.Children.Add(dataGrid);
+        //        }
+        //        else if(reportListBox.SelectedIndex == 2)
+        //        {
+        //            DataGrid dataGrid = new DataGrid();
+        //            DataTable dataTable = new DataTable();
+        //            DatabaseConnector.getInfoFromTable("coutShipsLaunched", dataTable);
+        //            dataGrid.ItemsSource = dataTable.DefaultView;
 
-                    mainReportStackPanel.Children.Add(dataGrid);
-                }
-                else if(reportListBox.SelectedIndex == 2)
-                {
-                    DataGrid dataGrid = new DataGrid();
-                    DataTable dataTable = new DataTable();
-                    DatabaseConnector.getInfoFromTable("coutShipsLaunched", dataTable);
-                    dataGrid.ItemsSource = dataTable.DefaultView;
+        //            mainReportStackPanel.Children.Add(dataGrid);
+        //        }
+        //        else if (reportListBox.SelectedIndex == 1)
+        //        {
+        //            DataGrid dataGrid = new DataGrid();
+        //            DataTable dataTable = new DataTable();
+        //            DatabaseConnector.getInfoFromTable("countShipsLaunched", dataTable);
+        //            dataGrid.ItemsSource = dataTable.DefaultView;
 
-                    mainReportStackPanel.Children.Add(dataGrid);
-                }
-                else if (reportListBox.SelectedIndex == 1)
-                {
-                    DataGrid dataGrid = new DataGrid();
-                    DataTable dataTable = new DataTable();
-                    DatabaseConnector.getInfoFromTable("countShipsLaunched", dataTable);
-                    dataGrid.ItemsSource = dataTable.DefaultView;
+        //            mainReportStackPanel.Children.Add(dataGrid);
 
-                    mainReportStackPanel.Children.Add(dataGrid);
+        //            CartesianChart Grafic = new CartesianChart();
 
-                    CartesianChart Grafic = new CartesianChart();
+        //            SeriesCollection serias = new SeriesCollection();
+        //            ChartValues<int> countShips = new ChartValues<int>();
+        //            List<string> nameBattles = new List<string>();
+        //            foreach (DataRow dataRow in dataTable.Rows)
+        //            {
+        //                countShips.Add(Convert.ToInt32(dataRow[1]));
+        //                nameBattles.Add(dataRow[0].ToString());
+        //            }
 
-                    SeriesCollection serias = new SeriesCollection();
-                    ChartValues<int> countShips = new ChartValues<int>();
-                    List<string> nameBattles = new List<string>();
-                    foreach (DataRow dataRow in dataTable.Rows)
-                    {
-                        countShips.Add(Convert.ToInt32(dataRow[1]));
-                        nameBattles.Add(dataRow[0].ToString());
-                    }
+        //            Grafic.AxisX.Clear();
+        //            Grafic.AxisX.Add(new Axis()
+        //            {
+        //                Title = "Название битв",
+        //                Labels = nameBattles
+        //            });
+        //            ColumnSeries columnSeries = new ColumnSeries();
+        //            columnSeries.Title = "Кол-во потопленных кораблей ";
+        //            columnSeries.Values = countShips;
 
-                    Grafic.AxisX.Clear();
-                    Grafic.AxisX.Add(new Axis()
-                    {
-                        Title = "Название битв",
-                        Labels = nameBattles
-                    });
-                    ColumnSeries columnSeries = new ColumnSeries();
-                    columnSeries.Title = "Кол-во потопленных кораблей ";
-                    columnSeries.Values = countShips;
-
-                    serias.Add(columnSeries);
-                    Grafic.Series = serias;
-                    Grafic.Background = new SolidColorBrush(Color.FromRgb(23, 34, 59));
-                    Grafic.Margin = new Thickness(25);
-                    Grid.SetRow(Grafic, 1);
-                    Grid.SetColumn(Grafic, 1);
-                    Grafic.Height = 120;
-                    Grafic.Width = 500;
-                    reportGrafic.Children.Add(Grafic);
-                }
-            }
-        }
+        //            serias.Add(columnSeries);
+        //            Grafic.Series = serias;
+        //            Grafic.Background = new SolidColorBrush(Color.FromRgb(23, 34, 59));
+        //            Grafic.Margin = new Thickness(25);
+        //            Grid.SetRow(Grafic, 1);
+        //            Grid.SetColumn(Grafic, 1);
+        //            Grafic.Height = 120;
+        //            Grafic.Width = 500;
+        //            reportGrafic.Children.Add(Grafic);
+        //        }
+        //    }
+        //}
+        //#endregion
     }
 }

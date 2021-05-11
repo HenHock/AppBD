@@ -11,7 +11,7 @@ namespace AppBD
 {
     public class DatabaseConnector
     {
-        private static string сonnectionString = "Data Source=DESKTOP-GLHF6V3;Initial Catalog=Seabattle1;Integrated Security=True";
+        private static string сonnectionString = "Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
 
         public static List<string> GetTables()
         {
@@ -78,8 +78,29 @@ namespace AppBD
                 }
                 catch
                 {
-                    MessageBox.Show("Error read info from table", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Ошибка чтения данных из файла!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        public static void DeleteInfoDB(string tableName, int indexRow)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(сonnectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("DELETE " + tableName + " WHERE "
+                        + DataManager.currentTable.Columns[0].ToString() + "=" + indexRow,connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter();
+                    adapter.UpdateCommand = command;
+                    adapter.UpdateCommand.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось удалить информацию из БД","Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
 
@@ -94,9 +115,12 @@ namespace AppBD
                     SqlCommand command = new SqlCommand("SELECT * FROM " + tableName, connection);
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
+
+                    adapter.DeleteCommand = comandbuilder.GetDeleteCommand();
+
                     adapter.Update(DataManager.currentTable);
                 }
-                    catch
+                        catch
                 {
                     MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }

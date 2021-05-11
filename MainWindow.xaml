@@ -115,7 +115,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Отчёты" Height="24" VerticalAlignment="Top">
+            <!--<TabItem Header="Отчёты" Height="24" VerticalAlignment="Top">
                 <Grid Style="{StaticResource mainStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="438*"/>
@@ -132,7 +132,7 @@
                     <StackPanel x:Name="mainReportStackPanel" Grid.Column="1" Grid.RowSpan="2"/>
                     <Canvas x:Name="reportGrafic" Grid.Column="1" Grid.Row="1"/>
                 </Grid>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>
