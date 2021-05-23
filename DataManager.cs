@@ -11,5 +11,9 @@ namespace AppBD
     {
         public static List<string> nameTables = DatabaseConnector.GetTables();
         public static DataTable currentTable = new DataTable();
+        public static List<int> indexDeleteRow = new List<int>();
+        public static List<int> indexEditRow = new List<int>();
+        public static DataTable Users = new DataTable();
+        public static int indexUser;
     }
 }

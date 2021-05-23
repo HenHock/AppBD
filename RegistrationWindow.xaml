@@ -1,0 +1,65 @@
+﻿<Window x:Class="AppBD.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppBD"
+        mc:Ignorable="d"
+        Title="RegistrationWindow" Height="500" Width="400" Background="#FF22242C" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="#FF22242C"/>
+            <Setter Property="BorderBrush" Value="#FF22242C"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="#FF22242C"/>
+            <Setter Property="BorderBrush" Value="#FF22242C"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="#FF22242C"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="0 0 50 -15"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Image Name="exitImage" VerticalAlignment="Top" MouseDown="ExitImage_MouseDown" Height="30" Width="30" HorizontalAlignment="Right" Margin="10"/>
+        <StackPanel Margin="25 80 25 25">
+            <TextBlock Text="Логин"/>
+            <TabPanel Margin="20 10 20 0" Name="loginTabPanel">
+                <Image Name="loginImage" Height="50" Width="50"/>
+                <TextBox Name="loginTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
+            </TabPanel>
+            <TextBlock Text="Пароль"/>
+            <TabPanel Margin="20 0 20 0" Name="passwordTabPanel">
+                <Image Name="passwordImage" Height="50" Width="50"/>
+                <PasswordBox Name="passwordTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
+            </TabPanel>
+            <TextBlock Text="Почта"/>
+            <TabPanel Margin="20 0 20 0" Name="emailTabPanel">
+                <Image Name="emailImage" Height="50" Width="50"/>
+                <TextBox Name="emailTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
+                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
+            </TabPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 -30 0 0">
+                <Button Name="confirmButton" Click="ConfirmButton_Click" Height="40" Width="120" Content="Потвердить" FontSize="20"/>
+                <Button Name="cancelButton" Click="CancelButton_Click" Height="40" Width="120" Content="Отмена" FontSize="20" Margin="20"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

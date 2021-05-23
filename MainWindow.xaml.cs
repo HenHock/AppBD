@@ -1,5 +1,5 @@
-﻿using LiveCharts.Wpf;
-using LiveCharts;
+﻿//using LiveCharts.Wpf;
+//using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,13 +25,24 @@ namespace AppBD
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private DataGrid tableDataGrid;
         private bool BDChange = false;
+        private bool isAdmin;
+
         public MainWindow()
         {
             InitializeComponent();
+            
+            foreach(DataRow row in DataManager.Users.Rows)
+            {
+                if (Convert.ToInt32(row[0]) == DataManager.indexUser)
+                    isAdmin = Convert.ToBoolean(Convert.ToInt32(row[4]));
+            }
 
-            tableListBox.ItemsSource = DataManager.nameTables;
+            if (!isAdmin)
+            {
+                tableListBox.Items.RemoveAt(tableListBox.Items.IndexOf("Users"));
+            }
+
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closed += MainWindow_Closed;
             //reportListBox.Items.Add("Classes");
@@ -136,7 +147,14 @@ namespace AppBD
         {
             if(tableDataGrid.SelectedIndex != -1)
             {
-                DataManager.currentTable.Rows.RemoveAt(tableDataGrid.SelectedIndex);
+                if (tableDataGrid.SelectedItems != null || DataManager.currentTable != null || tableDataGrid != null)
+                {
+                    while (tableDataGrid.SelectedItems.Count > 0)
+                    {
+                        if ((tableDataGrid.Items[tableDataGrid.SelectedIndex] as DataRowView) == null) return;
+                        (tableDataGrid.Items[tableDataGrid.SelectedIndex] as DataRowView).Row.Delete();
+                    }
+                }
                 BDChange = true;
             }
             else
@@ -344,7 +362,8 @@ namespace AppBD
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
-            DataRow updateRow = DataManager.currentTable.NewRow();
+            DataRowView updateRow = (tableDataGrid.SelectedItem as DataRowView);
+
             int i = 0;
             foreach(TabPanel tabPanel in editStackPanel.Children)
             {
@@ -359,13 +378,7 @@ namespace AppBD
                 }
             }
 
-            int indexRow = tableDataGrid.SelectedIndex;
-            DataManager.currentTable.Rows.RemoveAt(indexRow);
             BDChange = true;
-           //DatabaseConnector.UpdateBD(nameTableTextBlock.Text);
-            DataManager.currentTable.Rows.InsertAt(updateRow, indexRow);
-            //DatabaseConnector.UpdateBD(nameTableTextBlock.Text);
-            tableDataGrid.SelectedIndex = indexRow;
         }
         #endregion
 
@@ -424,11 +437,10 @@ namespace AppBD
             if (tableListBox.SelectedIndex != -1)
             {
                 DatabaseConnector.UpdateBD(nameTableTextBlock.Text);
-                //DatabaseConnector.DeleteInfoDB(nameTableTextBlock.Text, 2);
                 BDChange = false;
             }
         }
-        //#region reports
+        #region reports
         //private void reportListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    if(reportListBox.SelectedIndex != -1)
@@ -499,6 +511,6 @@ namespace AppBD
         //        }
         //    }
         //}
-        //#endregion
+        #endregion
     }
 }

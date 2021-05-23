@@ -11,7 +11,7 @@ namespace AppBD
 {
     public class DatabaseConnector
     {
-        private static string сonnectionString = "Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
+        private static string сonnectionString = @"Data Source=LAB07_PC01\SQLEXPRESS;Initial Catalog=Seabattle;Integrated Security=True";
 
         public static List<string> GetTables()
         {
@@ -83,27 +83,6 @@ namespace AppBD
             }
         }
 
-        public static void DeleteInfoDB(string tableName, int indexRow)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(сonnectionString))
-                {
-                    connection.Open();
-
-                    SqlCommand command = new SqlCommand("DELETE " + tableName + " WHERE "
-                        + DataManager.currentTable.Columns[0].ToString() + "=" + indexRow,connection);
-                    SqlDataAdapter adapter = new SqlDataAdapter();
-                    adapter.UpdateCommand = command;
-                    adapter.UpdateCommand.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось удалить информацию из БД","Ошибка",MessageBoxButton.OK,MessageBoxImage.Error);
-            }
-        }
-
         public static void UpdateBD(string tableName)
         {
             using (SqlConnection connection = new SqlConnection(сonnectionString))
@@ -116,15 +95,44 @@ namespace AppBD
                     SqlDataAdapter adapter = new SqlDataAdapter(command);
                     SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
 
+                    adapter.UpdateCommand = comandbuilder.GetUpdateCommand();
                     adapter.DeleteCommand = comandbuilder.GetDeleteCommand();
 
                     adapter.Update(DataManager.currentTable);
+
+                    DataManager.currentTable.AcceptChanges();
                 }
-                        catch
+                catch
                 {
                     MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
         }
+
+        public static void UpdateBD(string tableName, DataTable dataTable)
+        {
+            using (SqlConnection connection = new SqlConnection(сonnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("SELECT * FROM " + tableName, connection);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    SqlCommandBuilder comandbuilder = new SqlCommandBuilder(adapter);
+
+                    adapter.UpdateCommand = comandbuilder.GetUpdateCommand();
+                    adapter.DeleteCommand = comandbuilder.GetDeleteCommand();
+
+                    adapter.Update(dataTable);
+
+                    dataTable.AcceptChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось обновить базу данных.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
