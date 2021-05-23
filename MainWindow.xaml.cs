@@ -32,13 +32,15 @@ namespace AppBD
         {
             InitializeComponent();
 
-            foreach (DataRow row in DataManager.Users.Rows)
-            {
-                if (Convert.ToInt32(row[0]) == DataManager.indexUser)
-                    isAdmin = Convert.ToBoolean(Convert.ToInt32(row[4]));
-            }
+            //foreach (DataRow row in DataManager.Users.Rows)
+            //{
+            //    if (Convert.ToInt32(row[0]) == DataManager.indexUser)
+            //        isAdmin = Convert.ToBoolean(Convert.ToInt32(row[4]));
+            //}
 
-            setRule(isAdmin);
+            //setRule(isAdmin);
+
+            tableListBox.ItemsSource = DataManager.nameTables;
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closed += MainWindow_Closed;

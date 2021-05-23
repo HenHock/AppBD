@@ -11,7 +11,7 @@ namespace AppBD
 {
     public class DatabaseConnector
     {
-        private static string сonnectionString = @"Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
+        private static string сonnectionString = @"Data Source=DESKTOP-GLHF6V3;Initial Catalog=Seabattle1;Integrated Security=True";
 
         public static List<string> GetTables()
         {

@@ -27,31 +27,31 @@ namespace AppBD
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\logoImage.png");
-            bi.EndInit();
-            logoImage.Source = bi;
+            //BitmapImage bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\logoImage.png");
+            //bi.EndInit();
+            //logoImage.Source = bi;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
-            bi.EndInit();
-            loginImage.Source = bi;
-            loginTextBox.SelectionBrush = Brushes.LightGoldenrodYellow;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
+            //bi.EndInit();
+            //loginImage.Source = bi;
+            //loginTextBox.SelectionBrush = Brushes.LightGoldenrodYellow;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
-            bi.EndInit();
-            passwordImage.Source = bi;
-            passwordTextBox.CaretBrush = Brushes.LightGoldenrodYellow;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
+            //bi.EndInit();
+            //passwordImage.Source = bi;
+            //passwordTextBox.CaretBrush = Brushes.LightGoldenrodYellow;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\exitImage1.png");
-            bi.EndInit();
-            exitImage.Source = bi;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\exitImage1.png");
+            //bi.EndInit();
+            //exitImage.Source = bi;
 
             DatabaseConnector.getInfoFromTable("Users", DataManager.Users);
         }
@@ -62,30 +62,13 @@ namespace AppBD
 
             if (textBox != null)
             {
-                textBox.Foreground = Brushes.Black;
-                textBox.Background = Brushes.WhiteSmoke;
-                textBox.BorderBrush = Brushes.AliceBlue;
-
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage2.png");
-                bi.EndInit();
-                loginImage.Source = bi;
+                var bc = new BrushConverter();
+                loginImage.Fill = (Brush)bc.ConvertFrom("#FF512DA8");
             }
             else
             {
-                PasswordBox passwordBox = sender as PasswordBox;
-
-                passwordBox.Foreground = Brushes.Black;
                 var bc = new BrushConverter();
-                passwordBox.Background = Brushes.White;
-                passwordBox.BorderBrush = Brushes.AliceBlue;
-
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
-                bi.EndInit();
-                passwordImage.Source = bi;
+                passwordImage.Fill = (Brush)bc.ConvertFrom("#FF512DA8");
             }
         }
 
@@ -95,35 +78,15 @@ namespace AppBD
 
             if (textBox != null)
             {
-                textBox.Foreground = Brushes.WhiteSmoke;
-                var bc = new BrushConverter();
-                textBox.Background = (Brush)bc.ConvertFrom("#FF22242C");
-                textBox.BorderBrush = (Brush)bc.ConvertFrom("#FF22242C");
-
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
-                bi.EndInit();
-                loginImage.Source = bi;
+                loginImage.Fill = Brushes.White;
             }
             else
             {
-                PasswordBox passwordBox = sender as PasswordBox;
-
-                passwordBox.Foreground = Brushes.WhiteSmoke;
-                var bc = new BrushConverter();
-                passwordBox.Background = (Brush)bc.ConvertFrom("#FF22242C");
-                passwordBox.BorderBrush = (Brush)bc.ConvertFrom("#FF22242C");
-
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
-                bi.EndInit();
-                passwordImage.Source = bi;
+                passwordImage.Fill = Brushes.White;
             }
         }
 
-        private void ExitImage_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ExitImage_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -158,6 +121,22 @@ namespace AppBD
                 loginTextBox.BorderBrush = Brushes.IndianRed;
                 passwordTextBox.BorderBrush = Brushes.IndianRed;
             }
+        }
+
+        private void exitButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Button exitButton = sender as Button;
+
+            exitButton.Foreground = Brushes.Red;
+        }
+
+        private void exitButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Button exitButton = sender as Button;
+
+            exitButton.Foreground = Brushes.White;
+            var bc = new BrushConverter();
+            exitButton.Background = (Brush)bc.ConvertFrom("#FF22242C");
         }
     }
 }

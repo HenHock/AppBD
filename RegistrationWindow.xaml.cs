@@ -25,29 +25,29 @@ namespace AppBD
         {
             InitializeComponent();
 
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\exitImage1.png");
-            bi.EndInit();
-            exitImage.Source = bi;
+            //BitmapImage bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\exitImage1.png");
+            //bi.EndInit();
+            //exitImage.Source = bi;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
-            bi.EndInit();
-            loginImage.Source = bi;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
+            //bi.EndInit();
+            //loginImage.Source = bi;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
-            bi.EndInit();
-            passwordImage.Source = bi;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\passwordImage1.png");
+            //bi.EndInit();
+            //passwordImage.Source = bi;
 
-            bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\emailImage1.png");
-            bi.EndInit();
-            emailImage.Source = bi;
+            //bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\emailImage1.png");
+            //bi.EndInit();
+            //emailImage.Source = bi;
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -57,11 +57,11 @@ namespace AppBD
             {
                 if (textBox.Name.Equals("loginTextBox"))
                 {
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage2.png");
-                    bi.EndInit();
-                    loginImage.Source = bi;
+                    //BitmapImage bi = new BitmapImage();
+                    //bi.BeginInit();
+                    //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage2.png");
+                    //bi.EndInit();
+                    //loginImage.Source = bi;
 
                     textBox.Foreground = Brushes.Black;
                     textBox.Background = Brushes.WhiteSmoke;
@@ -90,11 +90,11 @@ namespace AppBD
 
             if (textBox != null && textBox.Name.Equals("loginTextBox"))
             {
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
-                bi.EndInit();
-                loginImage.Source = bi;
+                //BitmapImage bi = new BitmapImage();
+                //bi.BeginInit();
+                //bi.UriSource = new Uri(Directory.GetCurrentDirectory() + @"\Resource\loginImage1.png");
+                //bi.EndInit();
+                //loginImage.Source = bi;
 
                 textBox.Foreground = Brushes.WhiteSmoke;
                 var bc = new BrushConverter();
@@ -121,7 +121,7 @@ namespace AppBD
             }
         }
 
-        private void ExitImage_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ExitImage_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -180,6 +180,22 @@ namespace AppBD
             DatabaseConnector.UpdateBD("Users", dataTable);
             DataManager.Users = dataTable;
             this.Close();
+        }
+
+        private void exitButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Button exitButton = sender as Button;
+
+            exitButton.Foreground = Brushes.Red;
+        }
+
+        private void exitButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Button exitButton = sender as Button;
+
+            exitButton.Foreground = Brushes.White;
+            var bc = new BrushConverter();
+            exitButton.Background = (Brush)bc.ConvertFrom("#FF22242C");
         }
     }
 }

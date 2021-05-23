@@ -5,60 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppBD"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="500" Width="400" Background="#FF22242C" WindowStartupLocation="CenterScreen" WindowStyle="None">
-    <Window.Resources>
-        <Style TargetType="TextBox">
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Background" Value="#FF22242C"/>
-            <Setter Property="BorderBrush" Value="#FF22242C"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-        </Style>
-        <Style TargetType="PasswordBox">
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Background" Value="#FF22242C"/>
-            <Setter Property="BorderBrush" Value="#FF22242C"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Background" Value="#FF22242C"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Margin" Value="0 0 50 -15"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-        </Style>
-    </Window.Resources>
-    <Grid>
-        <Image Name="exitImage" VerticalAlignment="Top" MouseDown="ExitImage_MouseDown" Height="30" Width="30" HorizontalAlignment="Right" Margin="10"/>
-        <StackPanel Margin="25 80 25 25">
-            <TextBlock Text="Логин"/>
-            <TabPanel Margin="20 10 20 0" Name="loginTabPanel">
-                <Image Name="loginImage" Height="50" Width="50"/>
-                <TextBox Name="loginTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="RegistrationWindow" Height="500" Width="400" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Grid Background="#FF22242C">
+        <Button
+            Style="{StaticResource MaterialDesignIconButton}"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Margin="20"
+            Width="40"
+            Height="40"
+            Foreground="White"
+            Click="ExitImage_Click"
+            MouseEnter="exitButton_MouseEnter"
+            MouseLeave="exitButton_MouseLeave">
+            <Button.Background>
+                <SolidColorBrush Color="#FF22242C"/>
+            </Button.Background>
+            <materialDesign:PackIcon Kind="Close"/>
+        </Button>
+        <Image Name="logoImage" 
+               Width="200" Height="175"
+               VerticalAlignment="Top"
+               Margin="20"
+               Source="pack://application:,,,/Icons/reg_logo.png"/>
+        <StackPanel Margin="25 200 25 0">
+            <TabPanel Margin="20 10 20 10">
+                    <Image Name="loginImage" Height="40" Width="40"/>
+                    <TextBox x:Name="loginTextBox"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Логин"
+                         Foreground="WhiteSmoke"
+                         Width="250"
+                         Height="50"
+                         FontSize="15">
+                    </TextBox>
+                </TabPanel>
+            <TabPanel Margin="20 0 20 10" Name="passwordTabPanel">
+                <Image Name="passwordImage" Height="40" Width="40"/>
+                <PasswordBox x:Name="passwordTextBox"
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                             materialDesign:HintAssist.Hint="Пароль"
+                             Width="250"
+                             Height="50"
+                             FontSize="15"
+                             Foreground="WhiteSmoke"/>
             </TabPanel>
-            <TextBlock Text="Пароль"/>
-            <TabPanel Margin="20 0 20 0" Name="passwordTabPanel">
-                <Image Name="passwordImage" Height="50" Width="50"/>
-                <PasswordBox Name="passwordTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
+            <TabPanel Margin="20 0 20 20" Name="emailTabPanel">
+                <Image Name="emailImage" Height="40" Width="40"/>
+                <TextBox x:Name="emailTextBox"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         materialDesign:HintAssist.Hint="Почта"
+                         Foreground="WhiteSmoke"
+                         Width="250"
+                         Height="50"
+                         FontSize="15">
+                </TextBox>
             </TabPanel>
-            <TextBlock Text="Почта"/>
-            <TabPanel Margin="20 0 20 0" Name="emailTabPanel">
-                <Image Name="emailImage" Height="50" Width="50"/>
-                <TextBox Name="emailTextBox" Margin="-30 0 0 0" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-                <Rectangle Width="255" Height="1" Fill="White" HorizontalAlignment="Left" Margin="15 -25 0 0"/>
-            </TabPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 -30 0 0">
-                <Button Name="confirmButton" Click="ConfirmButton_Click" Height="40" Width="120" Content="Потвердить" FontSize="20"/>
-                <Button Name="cancelButton" Click="CancelButton_Click" Height="40" Width="120" Content="Отмена" FontSize="20" Margin="20"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="25 0 0 0">
+                <Button Name="confirmButton"
+                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                        Click="ConfirmButton_Click"
+                        Height="40" Width="135"
+                        Content="Потвердить"
+                        FontSize="18"
+                        HorizontalAlignment="Left"/>
+                <Button Name="cancelButton"
+                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                        Click="CancelButton_Click"
+                        Height="40" Width="135"
+                        Content="Отмена"
+                        FontSize="18"
+                        Margin="10 0 0 0"/>
             </StackPanel>
         </StackPanel>
     </Grid>
