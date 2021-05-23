@@ -31,23 +31,31 @@ namespace AppBD
         public MainWindow()
         {
             InitializeComponent();
-            
-            foreach(DataRow row in DataManager.Users.Rows)
+
+            foreach (DataRow row in DataManager.Users.Rows)
             {
                 if (Convert.ToInt32(row[0]) == DataManager.indexUser)
                     isAdmin = Convert.ToBoolean(Convert.ToInt32(row[4]));
             }
 
-            if (!isAdmin)
-            {
-                tableListBox.Items.RemoveAt(tableListBox.Items.IndexOf("Users"));
-            }
+            setRule(isAdmin);
 
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.Closed += MainWindow_Closed;
             //reportListBox.Items.Add("Classes");
             //reportListBox.Items.Add("Battles");
             //reportListBox.Items.Add("Ships");
+        }
+
+        private void setRule(bool flag)
+        {
+            if (!flag)
+            {
+                tableListBox.ItemsSource = DataManager.nameTables;
+
+                string str = "Users";
+
+            }
         }
 
         private void SaveBD()
