@@ -14,6 +14,23 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="650" Width="1100">
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5 -10 5 5"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="0 0 0 5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="23 0 0 -10"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="405*"/>
@@ -41,7 +58,9 @@
                                 Height="15"
                                 Foreground="White"
                                 Kind="Menu"/>
-                                <TextBlock Text="Таблицы" Padding="5 0 0 0"/>
+                                <TextBlock Text="Таблицы" 
+                                           Style="{StaticResource MaterialDesignButtonTextBlock}"
+                                           Padding="5 0 0 0"/>
                             </StackPanel>
                         </Button>
                         <ListBox Name="tableListBox"
@@ -62,7 +81,9 @@
                                 Height="15"
                                 Foreground="White"
                                 Kind="Menu"/>
-                                <TextBlock Text="Представления" Padding="5 0 0 0"/>
+                                <TextBlock Text="Представления"
+                                           Style="{StaticResource MaterialDesignButtonTextBlock}"
+                                           Padding="5 0 0 0"/>
                             </StackPanel>
                         </Button>
                         <ListBox Name="ViewListBox"
@@ -93,12 +114,15 @@
                     <ScrollViewer x:Name="toolsScroll" Grid.Column="2">
                         <StackPanel x:Name="toolsStackPanel" HorizontalAlignment="Right" Grid.Column="2">
                             <Button x:Name="addButton" Content="Добавить" Click="addButton_Click"/>
-                            <StackPanel Margin="30 0 0 0" Name="addStackPanel" Visibility="Collapsed"/>
+                            <StackPanel Margin="20 0 0 0" Name="addStackPanel" Visibility="Collapsed"/>
                             <Button x:Name="editButton" Content="Редактировать" Click="editButton_Click"/>
-                            <StackPanel x:Name="editStackPanel" Visibility="Collapsed" Margin="30 0 0 0"/>
+                            <StackPanel x:Name="editStackPanel" Visibility="Collapsed" Margin="20 0 0 0"/>
                             <Button x:Name="deleteButton" Click="deleteButton_Click" Content="Удалить"/>
                             <Button x:Name="saveButton" Content="Сохранить" Click="saveButton_Click"/>
-                            <TextBox x:Name="findTextBox" TextChanged="findTextBox_TextChanged" Text="Поиск..." Opacity="0.5" Width="130" GotFocus="findTextBox_GotFocus" LostFocus="findTextBox_LostFocus"/>
+                            <TextBox x:Name="findTextBox"
+                                     TextChanged="findTextBox_TextChanged"
+                                     materialDesign:HintAssist.Hint="Поиск..."
+                                     Width="130"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

@@ -177,21 +177,6 @@ namespace AppBD
         }
         //Поиск
         #region findBlock
-        private void findTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (findTextBox.Text.Equals("Поиск..."))
-            {
-                findTextBox.Text = "";
-            }
-        }
-
-        private void findTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (findTextBox.Text.Equals(""))
-            {
-                findTextBox.Text = "Поиск...";
-            }
-        }
 
         private void findTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -201,7 +186,7 @@ namespace AppBD
 
                 foreach (DataRow row in DataManager.currentTable.Rows)
                 {
-                    if (findTextBox.Text.Equals("") || findTextBox.Text.Equals("Поиск..."))
+                    if (findTextBox.Text.Equals(""))
                     {
                         filteredTable.Rows.Add(row.ItemArray);
                     }
@@ -232,7 +217,7 @@ namespace AppBD
             if (addStackPanel.Children.Count > 0)
                 addStackPanel.Children.Clear();
 
-            TabPanel tabPanel;
+            StackPanel stackPanel;
 
             foreach (DataColumn column in DataManager.currentTable.Columns)
             {
@@ -240,30 +225,29 @@ namespace AppBD
                 textBlock.Text = column.ColumnName;
 
                 TextBox textBox = new TextBox();
-                textBox.Margin = new Thickness(0);
 
-                tabPanel = new TabPanel();
-                tabPanel.Children.Add(textBlock);
-                tabPanel.Children.Add(textBox);
-                addStackPanel.Children.Add(tabPanel);
+                stackPanel = new StackPanel();
+                stackPanel.Children.Add(textBlock);
+                stackPanel.Children.Add(textBox);
+                addStackPanel.Children.Add(stackPanel);
             }
 
             Button confirmButton = new Button();
             confirmButton.Content = "Ок";
-            confirmButton.Margin = new Thickness(0);
             confirmButton.Click += addConfirmButton_Click;
 
             Button cancelButton = new Button();
             cancelButton.Content = "Отмена";
-            cancelButton.Margin = new Thickness(0);
+            cancelButton.Margin = new Thickness(5, 0, 0, 0);
             cancelButton.Click += addCancelButton_Click;
 
-            tabPanel = new TabPanel();
-            tabPanel.Margin = new Thickness(0, 5, 0, 5);
-            tabPanel.Children.Add(confirmButton);
-            tabPanel.Children.Add(cancelButton);
+            stackPanel = new StackPanel();
+            stackPanel.Margin = new Thickness(0, 0, 0, 5);
+            stackPanel.Orientation = Orientation.Horizontal;
+            stackPanel.Children.Add(confirmButton);
+            stackPanel.Children.Add(cancelButton);
 
-            addStackPanel.Children.Add(tabPanel);
+            addStackPanel.Children.Add(stackPanel);
         }
 
         private void addConfirmButton_Click(object sender, EventArgs e)
@@ -319,7 +303,7 @@ namespace AppBD
                 if (editStackPanel.Children.Count > 0)
                     editStackPanel.Children.Clear();
 
-                TabPanel tabPanel;
+                StackPanel stackPanel;
 
                 foreach (DataColumn column in DataManager.currentTable.Columns)
                 {
@@ -327,7 +311,6 @@ namespace AppBD
                     textBlock.Text = column.ColumnName;
 
                     TextBox textBox = new TextBox();
-                    textBox.Margin = new Thickness(0);
                     foreach(DataRow row in DataManager.currentTable.Rows)
                     {
                         if(tableDataGrid.SelectedIndex == DataManager.currentTable.Rows.IndexOf(row))
@@ -336,10 +319,10 @@ namespace AppBD
                         }
                     }
 
-                    tabPanel = new TabPanel();
-                    tabPanel.Children.Add(textBlock);
-                    tabPanel.Children.Add(textBox);
-                    editStackPanel.Children.Add(tabPanel);
+                    stackPanel = new StackPanel();
+                    stackPanel.Children.Add(textBlock);
+                    stackPanel.Children.Add(textBox);
+                    editStackPanel.Children.Add(stackPanel);
                 }
 
                 Button confirmButton = new Button();
@@ -349,15 +332,16 @@ namespace AppBD
 
                 Button cancelButton = new Button();
                 cancelButton.Content = "Отмена";
-                cancelButton.Margin = new Thickness(0);
+                cancelButton.Margin = new Thickness(5, 0, 0, 0);
                 cancelButton.Click += cancelButton_Click;
 
-                tabPanel = new TabPanel();
-                tabPanel.Margin = new Thickness(0, 5, 0, 5);
-                tabPanel.Children.Add(confirmButton);
-                tabPanel.Children.Add(cancelButton);
+                stackPanel = new StackPanel();
+                stackPanel.Margin = new Thickness(0, 0, 0, 5);
+                stackPanel.Orientation = Orientation.Horizontal;
+                stackPanel.Children.Add(confirmButton);
+                stackPanel.Children.Add(cancelButton);
 
-                editStackPanel.Children.Add(tabPanel);
+                editStackPanel.Children.Add(stackPanel);
             }
             else MessageBox.Show("Выберите строку, которую хотите отредактировать",
                 "Выберите строку", MessageBoxButton.OK, MessageBoxImage.Information);
