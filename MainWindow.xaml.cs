@@ -32,6 +32,9 @@ namespace AppBD
         {
             InitializeComponent();
 
+            tableListBox.ItemsSource = DataManager.nameTables;
+            ViewListBox.ItemsSource = DataManager.Views;
+
             foreach (DataRow row in DataManager.Users.Rows)
             {
                 if (Convert.ToInt32(row[0]) == DataManager.indexUser)
@@ -51,10 +54,11 @@ namespace AppBD
         {
             if (!flag)
             {
-                tableListBox.ItemsSource = DataManager.nameTables;
-
-                string str = "Users";
-
+                tableListBox.ItemsSource = DataManager.Views;
+            }
+            else
+            {
+                ViewListBox.Visibility = Visibility.Visible;
             }
         }
 

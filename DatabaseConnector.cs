@@ -11,7 +11,7 @@ namespace AppBD
 {
     public class DatabaseConnector
     {
-        private static string сonnectionString = @"Data Source=DESKTOP-UVLISFT;Initial Catalog=Seabattle1;Integrated Security=True";
+        private static string сonnectionString = @"Data Source=LAB07_PC01\SQLEXPRESS;Initial Catalog=Seabattle;Integrated Security=True";
 
         public static List<string> GetTables()
         {
@@ -20,11 +20,13 @@ namespace AppBD
                 connection.Open();
                 DataTable schema = connection.GetSchema("Tables");
                 List<string> TableNames = new List<string>();
+                DataManager.Views = new List<string>();
+
                 foreach (DataRow row in schema.Rows)
                 {
                     if(row[2].ToString().IndexOf("View") >= 0 || row[2].ToString().IndexOf("view") >= 0)
                     {
-
+                        DataManager.Views.Add(row[2].ToString());
                     }
                     else if(row[2].ToString().IndexOf("diagram") >= 0 || row[2].ToString().IndexOf("Diagram") >= 0)
                     {
